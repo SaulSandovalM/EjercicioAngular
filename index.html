@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="store">
+
+<head>
+    <meta charset="utf-8">
+    <title>TIENDA</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <section style="width:80%; margin:0 auto;">
+        <h2>TIENDA</h2>
+<input type="text" ng-model="name">
+        <div ng-controller="StoreController as store">
+            <div ng-repeat="product in store.product | filter:name">
+                <div class="row">
+                    <img width="20%" class="image" src="{{product.img}}">
+                    <span>{{product.nombre}}</span>
+                    <span>{{product.description}}</span>
+                    <span>{{product.price}}</span>
+                    <button ng-show="product.canBuy">Compra porfa</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            (function() {
+                var app = angular.module('store', []);
+
+                app.controller('StoreController', StoreController);
+                function StoreController() {
+                    this.product = productos;
+                };
+
+                var productos = [{
+                    nombre: 'iPhone',
+                    description: 'Apple iPhone 6 64gb, dorado',
+                    price: 5622,
+                    img: 'https://media.linio.com.mx/p/apple-9076-3204916-1-product.jpg'
+                }, {
+                    nombre: 'iPhone 5',
+                    description: 'Apple iPhone 5 16gb, negro',
+                    price: 7794,
+                    img: 'https://media.linio.com.mx/p/apple-9076-4102816-1-product.jpg'
+                }, {
+                    nombre: 'Firefox Cell',
+                    description: 'Celular lg Firefox Transparente 16gb ram/1.5',
+                    price: 1599,
+                    img: 'https://media.linio.com.mx/p/lg-1366-4251316-1-product.jpg'
+                }, {
+                    nombre: 'Galaxy S7',
+                    description: 'Celulares S7 Quadcore 1.3Ghz Nuevo',
+                    price: 1399,
+                    img: 'https://media.linio.com.mx/p/jiake-1838-7422574-1-product.jpg'
+                }, {
+                    nombre: 'Apple iPhone 6 16gb',
+                    description: 'Apple iPhone 6 16gb, plateado',
+                    price: 5346,
+                    img: 'https://media.linio.com.mx/p/apple-9076-5204916-1-product.jpg'
+                }, {
+                    nombre: 'Samsung Edge',
+                    description: 'Celular Samsung Edge 32Gb Liberado',
+                    price: 7999,
+                    img: 'https://media.linio.com.mx/p/samsung-7936-9785393-1-product.jpg'
+                }, {
+                    nombre: 'Laptop Hp 6460b 8460',
+                    description: 'Laptop Hp Core i5 8gb Ram 320gb',
+                    price: 4499,
+                    img: 'https://media.linio.com.mx/p/hp-5746-4677195-1-product.jpg'
+                }, {
+                    nombre: 'Apple Mackbook 13"',
+                    description: 'Apple Mackbook 13", Core2duo 4gb 250gb',
+                    price: 5999,
+                    img: 'https://media.linio.com.mx/p/apple-0126-2107716-1-product.jpg'
+                }, {
+                    nombre: 'Gamers Power',
+                    description: 'Laptop Dell 6420 Intel core i5 4gb',
+                    price: 3999,
+                    img: 'https://media.linio.com.mx/p/dell-8353-6591612-1-product.jpg'
+                }, {
+                    nombre: 'Laptop Lenovo',
+                    description: 'Lenovo Idea Pad 100 Intel inside Windows 10',
+                    price: 5199,
+                    img: 'https://media.linio.com.mx/p/lenovo-7666-0828915-1-product.jpg'
+                }, {
+                    nombre: 'Laptop Aniversario',
+                    description: 'Acer Aspire aniversario Es 15 amd E1',
+                    price: 5349,
+                    img: 'https://media.linio.com.mx/p/acer-9072-4854075-1-product.jpg'
+                }]
+            })();
+        </script>
+
+</body>
+
+</html>
