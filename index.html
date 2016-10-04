@@ -1,137 +1,257 @@
-<!DOCTYPE html>
-<html ng-app="store">
+<html ng-app="linio">
 
 <head>
     <meta charset="utf-8">
-    <title>TIENDA</title>
+    <title>Mi Tienda</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style type="text/css">
+        .color {
+            background: red;
+        }
 
+        .ng-invalid.ng-dirty {
+            border-color: red;
+        }
+
+        .ng-valid.ng-dirty {
+            border-color: green;
+        }
+
+        .ng-pristine {
+            /*border-color: blue;*/
+        }
+
+        .animate-repeat {
+            line-height: 30px;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        .animate-repeat.ng-move,
+        .animate-repeat.ng-enter,
+        .animate-repeat.ng-leave {
+            transition: all linear 0.5s;
+        }
+
+        .animate-repeat.ng-leave.ng-leave-active,
+        .animate-repeat.ng-move,
+        .animate-repeat.ng-enter {
+            opacity: 0;
+            max-height: 0;
+        }
+
+        .animate-repeat.ng-leave,
+        .animate-repeat.ng-move.ng-move-active,
+        .animate-repeat.ng-enter.ng-enter-active {
+            opacity: 1;
+            max-height: 30px;
+        }
+
+        .blue {
+            background: lightblue;
+        }
+    </style>
 </head>
 
 <body>
-    <section style="width:80%; margin:0 auto;">
-        <h2>TIENDA</h2>
-        <input type="text" ng-model="name">
-        <div ng-controller="StoreController as store">
-            <div ng-repeat="product in store.product | filter:name">
-                <div class="row">
-                    <img width="20%" class="image" src="{{product.img}}">
-                    <span>{{product.nombre}}</span>
-                    <span>{{product.description}}</span>
-                    <span>{{product.price}}</span>
-                    <button ng-show="product.canBuy">Compra porfa</button>
+
+<!--
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+
+            <div class="navbar-header navbar-right">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+                <a class="navbar-brand" href="#">FixterGeek</a>
+            </div>
+            <article id="menu">
+
+
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input ng-model="num" type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+
+
+                <button type="button" class="btn btn-default navbar-btn navbar-left">Sign in</button>
+            </article>
+        </div>
+        <!--fluid-->
+    <!-- </nav> -->
+
+    <section ng-controller="ProductsController as pCtrl" class="container">
+        <div class="jumbotron blue">
+            <h1>{{pCtrl.sayHello}}</h1>
+            <p>Compra aqui por favor</p>
+            <p>
+            </p>
+        </div>
+
+        <div class="page-header">
+            <h1>Filtra los productos <small>Encuentra justo lo que buscas</small></h1>
+            <label>Buscar: <input ng-model="searchText"></label>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+             aria-valuemax="100" style="width: {{num}}%">
+                {{num}}%
+                <span class="sr-only">40% Complete (success)</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-repeat="p in pCtrl.products | filter:searchText:limitTo:1" class="col-sm-6 col-md-3 animate-repeat">
+                <div class="thumbnail">
+                    <img ng-src="{{p.img}}" alt="{{p.description}}">
+                    <div class="caption">
+                        <h3>{{p.nombre}}</h3>
+                        <p>{{p.description}}</p>
+                        <p><a href="#!" class="btn btn-primary" role="button">{{p.price | currency:number:$2}}</a>
+                            <a href="#!" class="btn btn-default" role="button">Agregar al carrito</a></p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div ng-controller="ProductController as products">
-          <div ng-repeat="product in products.alumnos">
-            <h1>
-              {{product.first_name}}{{product.email}}
-            </h1>
+        <div>
+            <h2>Ingresa tus datos aqui</h2>
+            <div ng-controller="ProductsController as pCtrl">
+              <form ng-submit="pCtrl.pushAlumno(product)">
+                <input type="text" ng-model="pCtrl.alumno.first_name">
+                <input type="text" ng-model="pCtrl.alumno.last_name">
+                <input type="text" ng-model="pCtrl.alumno.email">
+                <input type="text" ng-model="pCtrl.alumno.twitter">
+
+                <button>Enviar</button>
+              </form>
+
+            </div>
           </div>
-        </div>
 
-        <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <h1 ng-repeat="alumno in pCtrl.alumnos">
+	{{alumno.first_name}}{{alumno.email}}
+        </h1>
+        <h1>{{pCtrl.alumnos[0].email}}</h1>
 
-        <script type="text/javascript">
-            (function() {
-                var app = angular.module('store', []);
+    </section>
 
-                app.controller('ProductController', ['$http', function($http) {
 
-                    var self = this;
-                    self.alumnos = [];
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-                    $http.get('http://54.218.122.235/alumnos/').success(function(data) {
-                        self.alumnos = data;
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.js">
+    </script>
+    <script>
+        (function() {
+            var app = angular.module('linio', ['ngAnimate']);
+            app.controller('ProductsController', ['$http', function($http) {
+                this.products = productos;
+
+                var self = this;
+                self.alumnos = [];
+
+                $http.get('http://54.218.122.235/alumnos/').success(function(data) {
+                    self.alumnos = data;
+                });
+
+                self.pushAlumno = function(object) {
+                    $http({
+                        method: 'POST',
+                        url: 'http://54.218.122.235/alumnos/',
+                        data: {
+                            first_name: self.alumno.first_name,
+                            last_name: self.alumno.last_name,
+                            email: self.alumno.email,
+                            twitter: self.alumno.twitter
+                        },
+                        headers: {
+                            Authorization: 'Token 19eaef4f48e92e296d057ba6337f1295d1a95b21',
+                        }
+                    }).then(function successCallback(response) {
+                        console.log(response)
+                    }, function errorCallback(response) {
+                        console.log(response)
                     });
-
-                    self.pushAlumno = function(object) {
-                        $http.post('http:54.218.122.235/alumnos/', {
-                            Authorization: 'Token d2eed34f77c553379f4bc39b418343573bdd8617',
-                            data: {
-                                first_name: 'Saul',
-                                last_name: 'Sandoval',
-                                email: 'saul@gmail.com',
-                                twitter: 'SaulSandoval'
-                            }
-                        })
-                        then(function(response) {
-                            console.log(response);
-                        }, function() {});
-                    };
-                    this.sayHello = "Tienda de Mierda";
-                }]);
-
-                app.controller('StoreController', StoreController);
-
-                function StoreController() {
-                    this.product = productos;
                 };
+                this.sayHello = "Tienda";
+            }]);
+            var productos = [{
+                nombre: 'iPhone',
+                description: 'Apple iPhone 6 64gb, dorado',
+                price: 5622,
+                img: 'https://media.linio.com.mx/p/apple-9076-3204916-1-product.jpg'
+            }, {
+                nombre: 'iPhone 5',
+                description: 'Apple iPhone 5 16gb, negro',
+                price: 7794,
+                img: 'https://media.linio.com.mx/p/apple-9076-4102816-1-product.jpg'
+            }, {
+                nombre: 'Firefox Cell',
+                description: 'Celular lg Firefox Transparente 16gb ram/1.5',
+                price: 1599,
+                img: 'https://media.linio.com.mx/p/lg-1366-4251316-1-product.jpg'
+            }, {
+                nombre: 'Galaxy S7',
+                description: 'Celulares S7 Quadcore 1.3Ghz Nuevo',
+                price: 1399,
+                img: 'https://media.linio.com.mx/p/jiake-1838-7422574-1-product.jpg'
+            }, {
+                nombre: 'Apple iPhone 6 16gb',
+                description: 'Apple iPhone 6 16gb, plateado',
+                price: 5346,
+                img: 'https://media.linio.com.mx/p/apple-9076-5204916-1-product.jpg'
+            }, {
+                nombre: 'Samsung Edge',
+                description: 'Celular Samsung Edge 32Gb Liberado',
+                price: 7999,
+                img: 'https://media.linio.com.mx/p/samsung-7936-9785393-1-product.jpg'
+            }, {
+                nombre: 'Laptop Hp 6460b 8460',
+                description: 'Laptop Hp Core i5 8gb Ram 320gb',
+                price: 4499,
+                img: 'https://media.linio.com.mx/p/hp-5746-4677195-1-product.jpg'
+            }, {
+                nombre: 'Apple Mackbook 13"',
+                description: 'Apple Mackbook 13", Core2duo 4gb 250gb',
+                price: 5999,
+                img: 'https://media.linio.com.mx/p/apple-0126-2107716-1-product.jpg'
+            }, {
+                nombre: 'Gamers Power',
+                description: 'Laptop Dell 6420 Intel core i5 4gb',
+                price: 3999,
+                img: 'https://media.linio.com.mx/p/dell-8353-6591612-1-product.jpg'
+            }, {
+                nombre: 'Laptop Lenovo',
+                description: 'Lenovo Idea Pad 100 Intel inside Windows 10',
+                price: 5199,
+                img: 'https://media.linio.com.mx/p/lenovo-7666-0828915-1-product.jpg'
+            }, {
+                nombre: 'Laptop Aniversario',
+                description: 'Acer Aspire aniversario Es 15 amd E1',
+                price: 5349,
+                img: 'https://media.linio.com.mx/p/acer-9072-4854075-1-product.jpg'
+            }]
 
-                var productos = [{
-                    nombre: 'iPhone',
-                    description: 'Apple iPhone 6 64gb, dorado',
-                    price: 5622,
-                    img: 'https://media.linio.com.mx/p/apple-9076-3204916-1-product.jpg'
-                }, {
-                    nombre: 'iPhone 5',
-                    description: 'Apple iPhone 5 16gb, negro',
-                    price: 7794,
-                    img: 'https://media.linio.com.mx/p/apple-9076-4102816-1-product.jpg'
-                }, {
-                    nombre: 'Firefox Cell',
-                    description: 'Celular lg Firefox Transparente 16gb ram/1.5',
-                    price: 1599,
-                    img: 'https://media.linio.com.mx/p/lg-1366-4251316-1-product.jpg'
-                }, {
-                    nombre: 'Galaxy S7',
-                    description: 'Celulares S7 Quadcore 1.3Ghz Nuevo',
-                    price: 1399,
-                    img: 'https://media.linio.com.mx/p/jiake-1838-7422574-1-product.jpg'
-                }, {
-                    nombre: 'Apple iPhone 6 16gb',
-                    description: 'Apple iPhone 6 16gb, plateado',
-                    price: 5346,
-                    img: 'https://media.linio.com.mx/p/apple-9076-5204916-1-product.jpg'
-                }, {
-                    nombre: 'Samsung Edge',
-                    description: 'Celular Samsung Edge 32Gb Liberado',
-                    price: 7999,
-                    img: 'https://media.linio.com.mx/p/samsung-7936-9785393-1-product.jpg'
-                }, {
-                    nombre: 'Laptop Hp 6460b 8460',
-                    description: 'Laptop Hp Core i5 8gb Ram 320gb',
-                    price: 4499,
-                    img: 'https://media.linio.com.mx/p/hp-5746-4677195-1-product.jpg'
-                }, {
-                    nombre: 'Apple Mackbook 13"',
-                    description: 'Apple Mackbook 13", Core2duo 4gb 250gb',
-                    price: 5999,
-                    img: 'https://media.linio.com.mx/p/apple-0126-2107716-1-product.jpg'
-                }, {
-                    nombre: 'Gamers Power',
-                    description: 'Laptop Dell 6420 Intel core i5 4gb',
-                    price: 3999,
-                    img: 'https://media.linio.com.mx/p/dell-8353-6591612-1-product.jpg'
-                }, {
-                    nombre: 'Laptop Lenovo',
-                    description: 'Lenovo Idea Pad 100 Intel inside Windows 10',
-                    price: 5199,
-                    img: 'https://media.linio.com.mx/p/lenovo-7666-0828915-1-product.jpg'
-                }, {
-                    nombre: 'Laptop Aniversario',
-                    description: 'Acer Aspire aniversario Es 15 amd E1',
-                    price: 5349,
-                    img: 'https://media.linio.com.mx/p/acer-9072-4854075-1-product.jpg'
-                }]
-            })();
-        </script>
+        })();
+    </script>
 
 </body>
 
